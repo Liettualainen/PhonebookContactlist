@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/PhonebookContactlist/static/css/main.7acaea2f.css",
+    "main.js": "/PhonebookContactlist/static/js/main.a2ff6c51.js",
+    "index.html": "/PhonebookContactlist/index.html",
+    "main.7acaea2f.css.map": "/PhonebookContactlist/static/css/main.7acaea2f.css.map",
+    "main.a2ff6c51.js.map": "/PhonebookContactlist/static/js/main.a2ff6c51.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.a2ff6c51.js"
+  ]
+}
