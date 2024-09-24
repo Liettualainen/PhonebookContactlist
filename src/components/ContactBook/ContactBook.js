@@ -1,7 +1,7 @@
 import { Component } from "react";
 import {
   DivLayout, Phonebookstyle, FormFeedback, FormLebel, FormSection,
-  FormCheck, Button, InputName, FormRadio, FormSelect, RadioLebel} from "./ContactBook.styled";
+  FormCheck, Button, InputName, FormRadio, FormSelect} from "./ContactBook.styled";
 // import { FeedbackOptions } from './FeedbackOptions.js';
 // import { Section } from './Section.js'
 const Gender = {
@@ -16,9 +16,9 @@ const INITIAL_STATE = {
     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
-  filter: '',
   name: '',
   number: '',
+  filter: '',
   gender: null,
   age: "",  
   agreed: false,
