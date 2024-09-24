@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { nanoid } from "nanoid";
 import {
   DivLayout, Phonebookstyle, FormFeedback, FormLebel, FormSection,
   FormCheck, Button, InputName, FormRadio, FormSelect} from "./ContactBook.styled";
@@ -23,29 +24,67 @@ const INITIAL_STATE = {
   age: "",  
   agreed: false,
   };
-
 export class Contactbook extends Component {
   state = { ...INITIAL_STATE };
 
   handleChange = evt => {
     const { name, value, type, checked } = evt.target;
-    this.setState({[name]: type === "checkbox" ? checked : value });
+    this.setState({ [name]: type === "checkbox" ? checked : value });
   };
 
   handleSubmit = evt => {
     evt.preventDefault();
-  const { name, number, gender, age, agreed } = this.state;
-    console.log(`Name: ${name},Number: ${number}. gender:${gender}, age:${age}, agreed:${agreed}`);
-      //  this.props.onSubmit({ ...this.state });
+    const { name, number, gender, age, agreed, contacts } = this.state;
+    console.log("state", this.state);
+    const id = nanoid();
+    if (agreed) {
+      const contactsName = contacts.map(item => { item = item.name; return item })
+      if (contactsName.includes(name)) {
+        alert(`${name} is already in the Phonebook`);
+      }
+      else {
+        this.setState(prevState => ({ contacts: [...prevState.contacts, { id, name, number, gender, age, agreed }] }))
+        // contacts.push({ id, name, number, gender, age, agreed });
+        // this.setState({ contacts: [contacts] });    
+        this.reset();
+      }
+    }
+    else {
+        alert("Please confirm correct info");
+    }   
   }
 
+  reset = () => {
+    this.setState({ name: "", number: "", gender: "", age: "", agreed: "" })
+    // this.setState({ ...INITIAL_STATE });
+  };
+
+  filterContact = evt => {
+    const { contacts, filter } = this.state;
+    this.setState({ filter: evt.target.value });
+     console.log(contacts.filter(contact=>contact.name.toLowerCase().includes(filter.toLowerCase()) ))
+  }
+
+  // deleteContact = id => {
+  //   console.log(id);
+  // }
+
+
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId)
+    }));
+  };
+
+
   render() {
-   const {name, number, gender, age, agreed } = this.state;
+
+   const {name, number, gender, age, agreed, contacts, filter } = this.state;
       return (
         <DivLayout>
                  <Phonebookstyle>Phonebook
        </Phonebookstyle>
-        <FormFeedback onSubmit={this.handleSubmit}>
+        <FormFeedback name="form" onSubmit={this.handleSubmit}>
         <FormLebel><InputName>Name</InputName>
               <input type="text"
                 placeholder="Enter the name"
@@ -62,7 +101,6 @@ export class Contactbook extends Component {
             onChange={this.handleChange}
           />
             </FormLebel>
-            
 
         <FormSection>
               <InputName>Choose gender</InputName>
@@ -113,16 +151,47 @@ export class Contactbook extends Component {
           />
             </FormCheck>
             
-            <Button>Add contact</Button>
+            <Button type="submit" >Add contact</Button>
             
         </FormFeedback>
           
-
-               <Phonebookstyle><br />Contacts
-       </Phonebookstyle>
-           <span><br />Find contacts by name
-       </span>
-       <input type="text" name="name" required />
+          <div>
+            {(contacts.length > 0) &&
+              <>
+                         <Phonebookstyle>Contacts
+              </Phonebookstyle>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "start", margin: 0, padding: 0, }}>
+                <span>Find contacts by name</span>
+               <input 
+            type="text"
+            placeholder="Search contact"
+            name="filter"
+            //  value={filter}
+            onChange={this.filterContact}
+            />
+              </div>
+              {
+                (filter) ?
+                  <ul style={{ margin: 0, padding: 0, }}>  
+                           {contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())).map(contact => (
+            <li key={contact.id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
+                <span>Name: {contact.name}:Number: {contact.number} Gender:{contact.gender} Age:{contact.age}</span>
+              <button onClick={this.deleteContact}>DELETE</button>
+            </li>
+                           ))}
+                      </ul>
+                  : <ul style={{ margin: 0, padding: 0, }}>  
+            {contacts.map(({id, name, number, gender, age}) => (
+            <li key={id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
+                <span>Name: {name}:Number: {number} Gender:{gender} Age:{age}</span>
+              <button onClick={()=> this.deleteContact(id)}>DELETE</button>
+            </li>
+                    ))}
+          </ul>                
+}
+              </>
+              } 
+          </div>
     </DivLayout>)
   }
 }
