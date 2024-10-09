@@ -1,17 +1,13 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
+import { ContactForm } from "./ContactForm.js"
+import {ContactList} from "./ContactList.js"
 import {
   DivLayout, Phonebookstyle, FormFeedback, FormLebel, FormSection,
   FormCheck, Button, InputName, FormRadio, FormSelect, ContactsDiv,
   FindContactsDiv, FindContactsSpan, FindContactsInput, FindContactsUl, DeleteButton,
   ContactsLi, ContactsSpanDiv,
 } from "./ContactBook.styled";
-// import { FeedbackOptions } from './FeedbackOptions.js';
-// import { Section } from './Section.js'
-const Gender = {
-  MALE: "male",
-  FEMALE: "female",
-};
 
 const INITIAL_STATE = {
       contacts: [
@@ -72,115 +68,133 @@ export class Contactbook extends Component {
    const {name, number, gender, age, agreed, contacts, filter } = this.state;
       return (
         <DivLayout>
-      <Phonebookstyle>Phonebook
-       </Phonebookstyle>
-        <FormFeedback name="form" onSubmit={this.handleSubmit}>
-        <FormLebel><InputName>Name</InputName>
-            <input type="text"
-            placeholder="Enter the name"
-            name="name" required
-            value={name}
-            onChange={this.handleChange}
+      <Phonebookstyle>Phonebook</Phonebookstyle>
+          <ContactForm
+            onName={name}
+            onNumber={number}
+            onGender={gender}
+            onAge={age}
+            onAgreed={agreed}
+            onFormSubmit={this.handleSubmit}
+            onHandleChange={this.handleChange} />
+
+          <ContactList
+            onContacts={contacts}
+            onFilterContact={this.filterContact}
+            onFilter= {filter}
           />
-            </FormLebel>
-            <FormLebel><InputName>Number</InputName>
-            <input type="tel"
-            placeholder="Enter tel number"
-            name="number" required 
-            value={number}
-            onChange={this.handleChange}
-          />
-            </FormLebel>
-        <FormSection>
-              <InputName>Choose gender</InputName>
-              <FormRadio>
-          <label>
-            Male
-            <input
-              type="radio"
-              checked={gender === Gender.MALE}
-              name="gender"
-              value={Gender.MALE}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Female
-            <input
-              type="radio"
-              checked={gender === Gender.FEMALE}
-              name="gender"
-              value={Gender.FEMALE}
-              onChange={this.handleChange}
-            />
-          </label>
-              </FormRadio>
-            </FormSection>
-            <FormLebel>
-              <InputName>Choose age</InputName>
-              <FormRadio>
-            <FormSelect name="age" value={age} onChange={this.handleChange}>
-            <option value="" disabled>...</option>
-            <option value="18-25">18-25</option>
-            <option value="26-35">26-35</option>
-            <option value="36+">36+</option>
-          </FormSelect>
-              </FormRadio>
-            </FormLebel>
-        <FormCheck>
-          <InputName>Confirm correct info </InputName>
-              <input
-            name="agreed"
-            type="checkbox"
-            checked={agreed}
-            onChange={this.handleChange}
-          />
-            </FormCheck>
-            <Button type="submit" >Add contact</Button>
-        </FormFeedback>
-          <ContactsDiv>
-            {(contacts.length > 0) &&
-              <>
-              <Phonebookstyle>Contacts
-              </Phonebookstyle>
-              <FindContactsDiv>
-                <FindContactsSpan>Find contacts by name</FindContactsSpan>
-               <FindContactsInput 
-            type="text"
-            placeholder="Search contact"
-            name="filter"
-            //  value={filter}
-            onChange={this.filterContact}
-            />
-              </FindContactsDiv>
-              {
-                (filter) 
-                 ? <FindContactsUl style={{ margin: 0, padding: 0, }}>  
-            {contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())).map(({id, name, number, gender, age}) => (
-            <ContactsLi key={id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
-                    <ContactsSpanDiv>
-                  <span>{name} tel.No:{number}</span>
-                <span>Gender: {gender}, Age: {age}</span>
-                </ContactsSpanDiv>
-              <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
-            </ContactsLi>
-                           ))}
-              </FindContactsUl>
-                  : <FindContactsUl style={{ margin: 0, padding: 0, }}>  
-            {contacts.map(({id, name, number, gender, age}) => (
-            <ContactsLi key={id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
-                <ContactsSpanDiv>
-                  <span>{name} tel.No:{number}</span>
-                <span>Gender: {gender}, Age: {age}</span>
-                </ContactsSpanDiv>
-              <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
-            </ContactsLi>
-                    ))}
-          </FindContactsUl>                
-}
-              </>
-              } 
-          </ContactsDiv>
     </DivLayout>)
   }
 }
+
+
+
+        // {/* <FormFeedback name="form" onSubmit={this.handleSubmit}>
+        // <FormLebel><InputName>Name</InputName>
+        //     <input type="text"
+        //     placeholder="Enter the name"
+        //     name="name" required
+        //     value={name}
+        //     onChange={this.handleChange}
+        //   />
+        //     </FormLebel>
+        //     <FormLebel><InputName>Number</InputName>
+        //     <input type="tel"
+        //     placeholder="Enter tel number"
+        //     name="number" required 
+        //     value={number}
+        //     onChange={this.handleChange}
+        //   />
+        //     </FormLebel>
+        // <FormSection>
+        //       <InputName>Choose gender</InputName>
+        //       <FormRadio>
+        //   <label>
+        //     Male
+        //     <input
+        //       type="radio"
+        //       checked={gender === Gender.MALE}
+        //       name="gender"
+        //       value={Gender.MALE}
+        //       onChange={this.handleChange}
+        //     />
+        //   </label>
+        //   <label>
+        //     Female
+        //     <input
+        //       type="radio"
+        //       checked={gender === Gender.FEMALE}
+        //       name="gender"
+        //       value={Gender.FEMALE}
+        //       onChange={this.handleChange}
+        //     />
+        //   </label>
+        //       </FormRadio>
+        //     </FormSection>
+        //     <FormLebel>
+        //       <InputName>Choose age</InputName>
+        //       <FormRadio>
+        //     <FormSelect name="age" value={age} onChange={this.handleChange}>
+        //     <option value="" disabled>...</option>
+        //     <option value="18-25">18-25</option>
+        //     <option value="26-35">26-35</option>
+        //     <option value="36+">36+</option>
+        //   </FormSelect>
+        //       </FormRadio>
+        //     </FormLebel>
+        // <FormCheck>
+        //   <InputName>Confirm correct info </InputName>
+        //       <input
+        //     name="agreed"
+        //     type="checkbox"
+        //     checked={agreed}
+        //     onChange={this.handleChange}
+        //   />
+        //     </FormCheck>
+        //     <Button type="submit" >Add contact</Button>
+        // </FormFeedback> */}
+
+
+        
+//           {/* <ContactsDiv>
+//             {(contacts.length > 0) &&
+//               <>
+//               <Phonebookstyle>Contacts</Phonebookstyle>
+//               <FindContactsDiv>
+//                 <FindContactsSpan>Find contacts by name</FindContactsSpan>
+//                <FindContactsInput 
+//             type="text"
+//             placeholder="Search contact"
+//             name="filter"
+//             //  value={filter}
+//             onChange={this.filterContact}
+//             />
+//               </FindContactsDiv>
+//               {
+//                 (filter) 
+//                  ? <FindContactsUl style={{ margin: 0, padding: 0, }}>  
+//             {contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())).map(({id, name, number, gender, age}) => (
+//             <ContactsLi key={id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
+//                     <ContactsSpanDiv>
+//                   <span>{name} tel.No:{number}</span>
+//                 <span>Gender: {gender}, Age: {age}</span>
+//                 </ContactsSpanDiv>
+//               <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
+//             </ContactsLi>
+//                            ))}
+//               </FindContactsUl>
+//                   : <FindContactsUl style={{ margin: 0, padding: 0, }}>  
+//             {contacts.map(({id, name, number, gender, age}) => (
+//             <ContactsLi key={id} style={{ display: "flex", flexDirection: "row", alignItems: "start", margin: 0, padding: 0,}}>
+//                 <ContactsSpanDiv>
+//                   <span>{name} tel.No:{number}</span>
+//                 <span>Gender: {gender}, Age: {age}</span>
+//                 </ContactsSpanDiv>
+//               <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
+//             </ContactsLi>
+//                     ))}
+//           </FindContactsUl>                
+// }
+//               </>
+//               } 
+//           </ContactsDiv> */}

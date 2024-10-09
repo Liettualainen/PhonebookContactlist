@@ -140,6 +140,7 @@ export const FindContactsUl = styled.ul`
 display: flex;
 flex-direction: column;
 align-items: start;
+padding: 0;
 margin: 20px 0 20px 0;
 font-size: 25px;
 `
@@ -173,13 +174,13 @@ border: 1px solid black;
 export const ContactsLi = styled.li`
 display: flex;
 flex-direction: row;
-width: 650px;
+alignItems: "start"
 `
 
 export const ContactsSpanDiv = styled.div`
 display: flex;
 flex-direction: column;
 align-items: start;
-width: 700px;
-
+width: 480px;
+margin-bottom: 15px;
 `
