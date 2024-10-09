@@ -76,7 +76,8 @@ export class Contactbook extends Component {
           <ContactList
             onContacts={contacts}
             onFilterContact={this.filterContact}
-            onFilter= {filter}
+            onFilter={filter}
+            onDeleteContact={this.deleteContact}
           />
     </DivLayout>)
   }

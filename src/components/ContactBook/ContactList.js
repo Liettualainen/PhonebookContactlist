@@ -2,7 +2,7 @@ import { ContactFilter } from "./ContactFilter"
 import {Phonebookstyle, ContactsDiv, FindContactsUl, DeleteButton, ContactsLi, ContactsSpanDiv,
 } from "./ContactBook.styled";
 
-export const ContactList = ({ onContacts, onFilterContact, onFilter, }) => (
+export const ContactList = ({ onContacts, onFilterContact, onFilter,onDeleteContact }) => (
     <ContactsDiv>
             {(onContacts.length > 0) &&
               <>
@@ -17,7 +17,7 @@ export const ContactList = ({ onContacts, onFilterContact, onFilter, }) => (
                   <span>{name} tel.No:{number}</span>
                 <span>Gender: {gender}, Age: {age}</span>
                 </ContactsSpanDiv>
-              <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
+              <DeleteButton onClick={()=> onDeleteContact(id)}>DELETE</DeleteButton>
             </ContactsLi>
                            ))}
               </FindContactsUl>
@@ -28,7 +28,7 @@ export const ContactList = ({ onContacts, onFilterContact, onFilter, }) => (
                   <span>{name} tel.No:{number}</span>
                 <span>Gender: {gender}, Age: {age}</span>
                 </ContactsSpanDiv>
-              <DeleteButton onClick={()=> this.deleteContact(id)}>DELETE</DeleteButton>
+              <DeleteButton onClick={()=> onDeleteContact(id)}>DELETE</DeleteButton>
             </ContactsLi>
                     ))}
                 </FindContactsUl>
