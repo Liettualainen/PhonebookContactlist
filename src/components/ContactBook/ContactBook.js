@@ -2,12 +2,7 @@ import { Component } from "react";
 import { nanoid } from "nanoid";
 import { ContactForm } from "./ContactForm.js"
 import {ContactList} from "./ContactList.js"
-import {
-  DivLayout, Phonebookstyle, FormFeedback, FormLebel, FormSection,
-  FormCheck, Button, InputName, FormRadio, FormSelect, ContactsDiv,
-  FindContactsDiv, FindContactsSpan, FindContactsInput, FindContactsUl, DeleteButton,
-  ContactsLi, ContactsSpanDiv,
-} from "./ContactBook.styled";
+import {DivLayout, Phonebookstyle } from "./ContactBook.styled";
 
 const INITIAL_STATE = {
       contacts: [
